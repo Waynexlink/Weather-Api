@@ -8,6 +8,7 @@ const inputField = document.querySelector(".input-field");
 
 navigator.geolocation.getCurrentPosition(
   (position) => {
+    temperature.textContent = "loading...";
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     console.log(latitude, longitude);
@@ -23,7 +24,7 @@ navigator.geolocation.getCurrentPosition(
 );
 function allClear() {
   weatherIcon.textContent = "";
-  temperature.textContent = "";
+  temperature.textContent = "Loading";
   weatherCondition.textContent = "";
   place.textContent = "";
 }
@@ -48,8 +49,38 @@ const fetchJson = async function (url) {
     const data = await response.json();
     console.log(data);
     if (data.name) {
-      weatherIcon.className = "wi wi-day-cloudy custom-icon";
-      temperature.textContent = data.main.temp;
+      if (data.name) {
+        const weatherType = data.weather[0].main;
+
+        switch (weatherType) {
+          case "Clouds":
+            weatherIcon.className = "wi wi-day-cloudy custom-icon";
+            break;
+          case "Rain":
+            weatherIcon.className = "wi wi-day-rain custom-icon";
+            break;
+          case "Clear":
+            weatherIcon.className = "wi wi-night-clear custom-icon";
+            break;
+          case "Snow":
+            weatherIcon.className = "wi wi-day-snow custom-icon";
+            break;
+          case "Thunderstorm":
+            weatherIcon.className = "wi wi-day-thunderstorm custom-icon";
+            break;
+          case "Drizzle":
+            weatherIcon.className = "wi wi-day-sprinkle custom-icon";
+            break;
+          case "Fog":
+          case "Mist":
+            weatherIcon.className = "wi wi-day-fog custom-icon";
+            break;
+          default:
+            weatherIcon.className = "wi wi-na custom-icon"; // Default icon for unhandled weather
+        }
+      }
+
+      temperature.textContent = (data.main.temp - 273.15).toFixed(2);
       weatherCondition.textContent = data.weather[0].main;
       place.textContent = data.name;
     } else {
