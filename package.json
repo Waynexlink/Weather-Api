@@ -1,16 +1,19 @@
 {
-  "name": "weather-api",
+  "name": "weatherapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js"
+    "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Williams Anetor",
   "license": "ISC",
   "dependencies": {
+    "apicache": "^1.6.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "hbs": "^4.2.0",
-    "path": "^0.12.7"
+    "express-rate-limit": "^7.4.1",
+    "needle": "^3.3.1"
   }
 }
